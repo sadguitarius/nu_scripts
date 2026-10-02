@@ -187,8 +187,8 @@ module completions {
     get-main-packages | append (get-optional-packages) | append (get-dependency-group-packages)
   }
 
-  export def "nu-complete uv packages" [context: string, position?:int] {
-    let preceding = $context | str substring ..$position
+  export def "nu-complete uv packages" [buffer: string, place: record] {
+    let preceding = $buffer | str substring ..$place.cursor
     let prev_tokens = $preceding | str trim | args-split
     # Check if "--group" is specified
     let go = $prev_tokens | enumerate | find '--group' | get -o index.0
